@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nihanth.dev | Frontend Developer & UI/UX Designer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#050505',
+            secondary: '#0A0A0A',
+            tertiary: '#0F0F0F',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #050505;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+    
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.08; transform: scale(1); }
+      50% { opacity: 0.15; transform: scale(1.05); }
+    }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .animate-slide-up { animation: slideInUp 0.8s ease-out forwards; }
+    .animate-slide-up-delay-1 { opacity: 0; animation: slideInUp 0.8s ease-out 0.2s forwards; }
+    .animate-slide-up-delay-2 { opacity: 0; animation: slideInUp 0.8s ease-out 0.4s forwards; }
+    .animate-slide-up-delay-3 { opacity: 0; animation: slideInUp 0.8s ease-out 0.6s forwards; }
+    .animate-float { animation: float 5s ease-in-out infinite; }
+    .animate-float-delay { animation: float 5s ease-in-out 2s infinite; }
+    .animate-pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
+    .animate-gradient { background-size: 200% 200%; animation: gradient-shift 8s ease infinite; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.2);
+    }
+    
+    .glow-button {
+      position: relative;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    .glow-button:hover::before { opacity: 0.6; }
+    .glow-button:hover { transform: translateY(-2px); }
+    
+    .outline-button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    .outline-button:hover {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .skill-card { transition: all 0.3s ease; }
+    .skill-card:hover { transform: scale(1.05); }
+    .skill-card:hover .skill-icon { color: #3b82f6; }
+    
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    
+    .form-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .project-preview-container {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .project-preview-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .project-preview-container iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      pointer-events: none;
+      transform: scale(0.5);
+      transform-origin: top left;
+      width: 200%;
+      height: 1000px;
+    }
+    
+    @media (max-width: 768px) {
+      .project-preview-container iframe {
+        height: 400px;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .project-preview-container iframe {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-primary/80 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <div class="flex items-center justify-between">
+        <a href="#" class="text-lg sm:text-xl font-bold gradient-text">nihanth.dev</a>
+        
+        <div class="hidden md:flex items-center gap-6 lg:gap-8">
+          <a href="#about" class="nav-link text-sm text-neutral-400 hover:text-white transition-colors">About</a>
+          <a href="#skills" class="nav-link text-sm text-neutral-400 hover:text-white transition-colors">Skills</a>
+          <a href="#projects" class="nav-link text-sm text-neutral-400 hover:text-white transition-colors">Projects</a>
+          <a href="#services" class="nav-link text-sm text-neutral-400 hover:text-white transition-colors">Services</a>
+          <a href="#contact" class="glow-button px-4 lg:px-5 py-2 rounded-full text-sm font-medium text-white">Contact Me</a>
+        </div>
+        
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-400 hover:text-white">
+          <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden md:hidden bg-secondary/95 backdrop-blur-xl border-t border-white/5">
+      <div class="px-4 sm:px-6 py-4 space-y-4">
+        <a href="#about" class="block text-neutral-400 hover:text-white transition-colors">About</a>
+        <a href="#skills" class="block text-neutral-400 hover:text-white transition-colors">Skills</a>
+        <a href="#projects" class="block text-neutral-400 hover:text-white transition-colors">Projects</a>
+        <a href="#services" class="block text-neutral-400 hover:text-white transition-colors">Services</a>
+        <a href="#contact" class="block text-neutral-400 hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-blue-500/10 rounded-full blur-[80px] sm:blur-[100px] animate-pulse-glow"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-purple-500/10 rounded-full blur-[80px] sm:blur-[100px] animate-pulse-glow" style="animation-delay: 3s;"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] bg-cyan-500/5 rounded-full blur-[100px] sm:blur-[120px] animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+    </div>
+    
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 60px 60px;"></div>
+    
+    <div class="absolute top-20 right-10 sm:right-20 w-2 h-2 sm:w-3 sm:h-3 bg-blue-500/40 rounded-full animate-float"></div>
+    <div class="absolute bottom-24 sm:bottom-32 left-10 sm:left-20 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500/40 rounded-full animate-float-delay"></div>
+    <div class="absolute top-32 sm:top-40 left-20 sm:left-32 w-3 h-3 sm:w-4 sm:h-4 bg-cyan-500/30 rounded-full animate-float" style="animation-delay: 1s;"></div>
+    
+    <div class="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
+      <div class="animate-slide-up mb-4 sm:mb-6">
+        <span class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-neutral-400">
+          <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></span>
+          Available for Projects
+        </span>
+      </div>
+      
+      <h1 class="animate-slide-up-delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-4 sm:mb-6">
+        <span class="block text-white">Nihanth</span>
+        <span class="block gradient-text animate-gradient">Pendem</span>
+      </h1>
+      
+      <p class="animate-slide-up-delay-2 text-base sm:text-lg md:text-xl text-neutral-400 font-light tracking-wide mb-3 sm:mb-4">
+        Frontend Developer <span class="text-blue-500">|</span> Website Creator
+      </p>
+      
+      <p class="animate-slide-up-delay-2 text-neutral-500 text-sm sm:text-base md:text-lg max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2">
+        I build modern, fast, and visually stunning websites for businesses and creators. 
+        Transforming ideas into exceptional digital experiences.
+      </p>
+      
+      <div class="animate-slide-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <a href="#projects" class="glow-button w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-medium text-white flex items-center justify-center gap-2">
+          View My Work
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <a href="#contact" class="outline-button w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-medium text-white flex items-center justify-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          Get In Touch
+        </a>
+      </div>
+      
+      <div class="animate-slide-up-delay-3 mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+        <div class="flex items-center gap-2 text-neutral-500">
+          <i data-lucide="code-2" class="w-4 h-4"></i>
+          <span class="text-xs sm:text-sm">HTML/CSS</span>
+        </div>
+        <div class="flex items-center gap-2 text-neutral-500">
+          <i data-lucide="file-json" class="w-4 h-4"></i>
+          <span class="text-xs sm:text-sm">JavaScript</span>
+        </div>
+        <div class="flex items-center gap-2 text-neutral-500">
+          <i data-lucide="palette" class="w-4 h-4"></i>
+          <span class="text-xs sm:text-sm">UI/UX</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 text-neutral-500">
+      <span class="text-[10px] sm:text-xs uppercase tracking-widest">Scroll</span>
+      <div class="w-5 h-8 sm:w-6 sm:h-10 rounded-full border border-neutral-700 flex items-start justify-center p-1.5 sm:p-2">
+        <div class="w-1 h-1.5 sm:w-1.5 sm:h-2.5 bg-blue-500 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="relative py-16 sm:py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/[0.02] to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="reveal grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
+        <div class="relative order-2 lg:order-1">
+          <div class="relative aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl sm:rounded-3xl transform rotate-6"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl sm:rounded-3xl transform -rotate-3"></div>
+            
+            <div class="relative glass-card rounded-2xl sm:rounded-3xl overflow-hidden aspect-square">
+              <img src="https://picsum.photos/seed/nihanth-dev/600/600.jpg" alt="Nihanth Pendem" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent"></div>
+            </div>
+            
+            <div class="absolute -right-2 sm:-right-4 top-1/4 glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 animate-float">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-500/20 flex items-center justify-center">
+                  <i data-lucide="briefcase" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                </div>
+                <div>
+                  <div class="text-xl sm:text-2xl font-bold text-white">2+</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-400">Years Experience</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="absolute -left-2 sm:-left-4 bottom-1/4 glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 animate-float-delay">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-green-500/20 flex items-center justify-center">
+                  <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-xl sm:text-2xl font-bold text-white">15+</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-400">Projects Done</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="order-1 lg:order-2">
+          <span class="text-blue-500 text-xs sm:text-sm font-medium uppercase tracking-widest">About Me</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 sm:mt-4 mb-4 sm:mb-6 tracking-tight">
+            Passionate About Creating
+            <span class="gradient-text"> Digital Excellence</span>
+          </h2>
+          
+          <div class="space-y-3 sm:space-y-4 text-neutral-400 text-sm sm:text-base leading-relaxed">
+            <p>
+              I'm Nihanth Pendem, a senior frontend developer and UI/UX designer with a passion for building 
+              modern, responsive, and user-centric web experiences. With expertise in cutting-edge technologies, 
+              I transform complex ideas into elegant, functional solutions.
+            </p>
+            <p>
+              My journey in web development has equipped me with a deep understanding of both the technical 
+              and creative aspects of building digital products. I believe in writing clean, maintainable code 
+              while never compromising on visual appeal and user experience.
+            </p>
+            <p>
+              When I'm not coding, you'll find me exploring new design trends, contributing to open-source 
+              projects, or sharing knowledge with the developer community.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
+            <div class="glass-card rounded-lg sm:rounded-xl p-3 sm:p-4">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <i data-lucide="map-pin" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                <div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Location</div>
+                  <div class="text-xs sm:text-sm text-white">India</div>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card rounded-lg sm:rounded-xl p-3 sm:p-4">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <i data-lucide="mail" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                <div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Email</div>
+                  <div class="text-xs sm:text-sm text-white">27nihanth02009@gmail.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <a href="#contact" class="inline-flex items-center gap-2 mt-6 sm:mt-8 text-sm sm:text-base text-blue-400 hover:text-blue-300 transition-colors">
+            <span>Let's work together</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="relative py-16 sm:py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="text-blue-500 text-xs sm:text-sm font-medium uppercase tracking-widest">Skills & Expertise</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 sm:mt-4 tracking-tight">
+          Technologies I
+          <span class="gradient-text"> Work With</span>
+        </h2>
+        <p class="text-neutral-400 mt-3 sm:mt-4 max-w-xl sm:max-w-2xl mx-auto text-sm sm:text-base">
+          A comprehensive toolkit of modern technologies and frameworks that I use to bring digital visions to life.
+        </p>
+      </div>
+      
+      <div class="reveal grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-orange-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-orange-500/20 transition-colors">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-orange-400 skill-icon transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">HTML5</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Semantic Markup</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-blue-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-blue-500/20 transition-colors">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 skill-icon transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">CSS3</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Styling & Animations</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-yellow-500/20 transition-colors">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400 skill-icon transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">JavaScript</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">ES6+ & DOM</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-cyan-500/20 transition-colors">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400 skill-icon transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">React</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Component-Based</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-teal-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-teal-500/20 transition-colors">
+            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-teal-400 skill-icon transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">Tailwind CSS</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Utility-First</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-purple-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-purple-500/20 transition-colors">
+            <i data-lucide="figma" class="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 skill-icon transition-colors"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">UI/UX Design</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Figma & XD</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-red-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-red-500/20 transition-colors">
+            <i data-lucide="git-branch" class="w-6 h-6 sm:w-8 sm:h-8 text-red-400 skill-icon transition-colors"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">Git & GitHub</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Version Control</p>
+        </div>
+        
+        <div class="skill-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center group cursor-pointer">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-green-500/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="smartphone" class="w-6 h-6 sm:w-8 sm:h-8 text-green-400 skill-icon transition-colors"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm sm:text-base mb-1">Responsive</h3>
+          <p class="text-[10px] sm:text-xs text-neutral-500">Mobile-First</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="relative py-16 sm:py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="text-blue-500 text-xs sm:text-sm font-medium uppercase tracking-widest">Featured Work</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 sm:mt-4 tracking-tight">
+          Recent
+          <span class="gradient-text"> Projects</span>
+        </h2>
+        <p class="text-neutral-400 mt-3 sm:mt-4 max-w-xl sm:max-w-2xl mx-auto text-sm sm:text-base">
+          A showcase of my recent work, demonstrating technical skills and creative problem-solving abilities.
+        </p>
+      </div>
+      
+      <div class="reveal space-y-8 sm:space-y-10">
+        <!-- Project 1: Medical Store -->
+        <div class="glass-card rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div class="p-4 sm:p-6 md:p-8 border-b border-white/5">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 text-[10px] sm:text-xs font-medium">Tailwind CSS</span>
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-[10px] sm:text-xs font-medium">JavaScript</span>
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-[10px] sm:text-xs font-medium">Responsive</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-3">Medical Store Website</h3>
+                <p class="text-neutral-400 max-w-2xl leading-relaxed text-sm sm:text-base">
+                  A comprehensive pharmacy website for New Sri Venkateswara Medical & General Stores in Hyderabad. 
+                  Features include real-time open/closed status, WhatsApp integration, Google Maps location, 
+                  service listings, and a mobile-first responsive design with smooth animations.
+                </p>
+              </div>
+              <a href="pharmacy sample.html" class="glow-button px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium text-white flex items-center gap-2 whitespace-nowrap self-start">
+                <i data-lucide="external-link" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                Live Demo
+              </a>
+            </div>
+          </div>
+          
+          <div class="project-preview-container">
+            <iframe srcdoc="<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'><title>Medical Store</title><link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700;800&display=swap' rel='stylesheet'><script src='https://cdn.tailwindcss.com'><\/script><style>:root{--bg:#FAFBFC;--bg-alt:#F0F4F3;--fg:#1A2E35;--fg-muted:#5A6B72;--primary:#0D7377;--primary-dark:#095456;--primary-light:#14919B;--accent:#E85D04;--accent-hover:#DC4C00;--card:#FFFFFF;--border:#D8E0DE;--success:#10B981}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg);color:var(--fg)}h1,h2,h3{font-family:'Fraunces',serif;font-weight:700}.hero-pattern{background-color:var(--primary);background-image:radial-gradient(ellipse at 20% 30%,rgba(20,145,155,0.6) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(13,115,119,0.8) 0%,transparent 50%)}.btn-primary{background:var(--accent);color:white;padding:0.75rem 1.5rem;border-radius:12px;font-weight:600;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;border:none;text-decoration:none}.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}.btn-secondary{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:white;padding:0.75rem 1.5rem;border-radius:12px;font-weight:600;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;border:2px solid rgba(255,255,255,0.3);text-decoration:none}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.2)}}.pulse-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 2s infinite}</style></head><body><header class='hero-pattern min-h-[500px] flex items-center relative overflow-hidden'><div class='container mx-auto px-6 py-16 relative z-10'><div class='max-w-4xl mx-auto text-center'><div class='flex justify-center mb-6'><div class='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white backdrop-blur-sm'><span class='pulse-dot bg-white'></span><span>Open Now</span></div></div><h1 class='text-3xl md:text-4xl font-bold text-white mb-4'>New Sri Venkateswara<br><span class='text-white/90'>Medical & General Stores</span></h1><p class='text-lg text-white/80 mb-8'>Trusted Medical Store in Warasiguda, Hyderabad</p><div class='flex flex-wrap justify-center gap-3'><a href='tel:+919951122341' class='btn-primary'><svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z'/></svg>Call Now</a><a href='#' class='btn-secondary'><svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/><circle cx='12' cy='10' r='3'/></svg>Directions</a></div><div class='mt-8 text-white/70 text-sm'>Open Daily: 10:00 AM - 9:30 PM</div></div></div></header><section class='py-12 bg-white'><div class='container mx-auto px-6'><div class='max-w-4xl mx-auto'><div class='text-center mb-8'><h2 class='text-2xl font-bold mb-2' style='color:var(--fg)'>Your Neighborhood Pharmacy</h2></div><div class='grid md:grid-cols-2 gap-4'><div class='p-4 rounded-xl' style='background:var(--bg-alt)'><h3 class='font-semibold mb-1' style='color:var(--fg)'>Prescription Medicines</h3><p class='text-sm' style='color:var(--fg-muted)'>Wide range of prescription medicines available.</p></div><div class='p-4 rounded-xl' style='background:var(--bg-alt)'><h3 class='font-semibold mb-1' style='color:var(--fg)'>OTC Medicines</h3><p class='text-sm' style='color:var(--fg-muted)'>All essential over-the-counter medications.</p></div><div class='p-4 rounded-xl' style='background:var(--bg-alt)'><h3 class='font-semibold mb-1' style='color:var(--fg)'>Healthcare Products</h3><p class='text-sm' style='color:var(--fg-muted)'>Vitamins, supplements, and personal care items.</p></div><div class='p-4 rounded-xl' style='background:var(--bg-alt)'><h3 class='font-semibold mb-1' style='color:var(--fg)'>Friendly Service</h3><p class='text-sm' style='color:var(--fg-muted)'>Personalized guidance for every customer.</p></div></div></div></div></section></body></html>" loading="lazy" title="Medical Store Website Preview"></iframe>
+          </div>
+          
+          <div class="p-4 sm:p-6 md:p-8">
+            <h4 class="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">Key Features</h4>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="clock" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Real-time Status</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Auto open/closed detection</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="message-circle" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">WhatsApp Integration</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Direct customer enquiry</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="map-pin" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Google Maps</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Easy navigation</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="smartphone" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Mobile-First</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Fully responsive design</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project 2: StarNodes -->
+        <div class="glass-card rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div class="p-4 sm:p-6 md:p-8 border-b border-white/5">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] sm:text-xs font-medium">Tailwind CSS</span>
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-[10px] sm:text-xs font-medium">JavaScript</span>
+                  <span class="px-2 sm:px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-[10px] sm:text-xs font-medium">Canvas Animation</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-3">StarNodes - Minecraft Hosting</h3>
+                <p class="text-neutral-400 max-w-2xl leading-relaxed text-sm sm:text-base">
+                  A premium Minecraft server hosting website with interactive particle animations, 
+                  pricing plans with tiered structure (Grass to Netherite), Discord integration, 
+                  real-time status badges, and a stunning dark theme with cyan accents.
+                </p>
+              </div>
+              <a href="venkatsai.html" class="glow-button px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium text-white flex items-center gap-2 whitespace-nowrap self-start">
+                <i data-lucide="external-link" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                Live Demo
+              </a>
+            </div>
+          </div>
+          
+          <div class="project-preview-container">
+            <iframe srcdoc="<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'><title>StarNodes</title><link href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'><script src='https://cdn.tailwindcss.com'><\/script><style>:root{--bg:#030712;--surface:#0a0f1a;--card:#111827;--border:#1f2937;--fg:#f9fafb;--muted:#9ca3af;--accent:#22d3ee;--accent-dark:#06b6d4}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background-color:var(--bg);color:var(--fg)}h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:var(--bg);font-weight:600;padding:10px 24px;border-radius:10px;border:none;cursor:pointer;font-size:0.875rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px}.btn-secondary{background:transparent;color:var(--fg);font-weight:600;padding:10px 24px;border-radius:10px;border:2px solid var(--border);font-size:0.875rem;text-decoration:none}.pricing-card{background:linear-gradient(165deg,rgba(17,24,39,0.9),rgba(10,15,26,0.95));border:1px solid var(--border);border-radius:20px;padding:20px;position:relative}.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0.6}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}.float{animation:float 6s ease-in-out infinite}.plan-badge{padding:4px 12px;border-radius:16px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px}</style></head><body><section class='min-h-[500px] flex items-center relative overflow-hidden'><div class='absolute inset-0' style='background:radial-gradient(ellipse at center,rgba(34,211,238,0.15),transparent 70%)'></div><div class='absolute top-1/4 left-[15%] w-16 h-16 rounded-2xl border border-cyan-500/20 float flex items-center justify-center' style='background:rgba(34,211,238,0.05)'><svg class='w-5 h-5 text-cyan-400/50' fill='currentColor' viewBox='0 0 24 24'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg></div><div class='relative z-10 max-w-3xl mx-auto px-6 text-center py-16'><div class='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border text-xs font-medium mb-6'><span class='w-2 h-2 rounded-full bg-cyan-400 animate-pulse'></span><span style='color:var(--muted)'>Servers Online</span><span style='color:var(--fg);font-weight:600'>99.9% Uptime</span></div><h1 class='text-3xl md:text-4xl font-bold mb-4' style='color:var(--fg)'>StarNodes<br><span style='color:var(--accent)'>High Performance</span><br>Minecraft Hosting</h1><p class='text-base mb-8 max-w-lg mx-auto' style='color:var(--muted)'>Affordable, powerful and reliable Minecraft servers for everyone.</p><div class='flex flex-wrap justify-center gap-3'><a href='#' class='btn-primary'>View Plans</a><a href='#' class='btn-secondary'>Join Discord</a></div></div></section><section class='py-8 px-6'><div class='max-w-3xl mx-auto grid grid-cols-3 gap-3'><div class='pricing-card'><span class='plan-badge text-white' style='background:linear-gradient(135deg,#22c55e,#16a34a)'>Starter</span><h3 class='text-lg font-bold mt-2 mb-1' style='color:var(--fg)'>GRASS</h3><div class='text-xl font-bold mb-2' style='color:var(--fg)'>₹100<span class='text-xs font-normal' style='color:var(--muted)'>/mo</span></div><p class='text-xs' style='color:var(--muted)'>2GB RAM • 50% CPU</p></div><div class='pricing-card'><span class='plan-badge text-cyan-900' style='background:linear-gradient(135deg,#67e8f9,#22d3ee)'>Popular</span><h3 class='text-lg font-bold mt-2 mb-1' style='color:var(--fg)'>DIAMOND</h3><div class='text-xl font-bold mb-2' style='color:var(--fg)'>₹649<span class='text-xs font-normal' style='color:var(--muted)'>/mo</span></div><p class='text-xs' style='color:var(--muted)'>12GB RAM • 300% CPU</p></div><div class='pricing-card'><span class='plan-badge text-violet-900' style='background:linear-gradient(135deg,#c4b5fd,#a78bfa)'>Ultimate</span><h3 class='text-lg font-bold mt-2 mb-1' style='color:var(--fg)'>NETHERITE</h3><div class='text-xl font-bold mb-2' style='color:var(--fg)'>₹849<span class='text-xs font-normal' style='color:var(--muted)'>/mo</span></div><p class='text-xs' style='color:var(--muted)'>16GB RAM • 400% CPU</p></div></div></section></body></html>" loading="lazy" title="StarNodes Website Preview"></iframe>
+          </div>
+          
+          <div class="p-4 sm:p-6 md:p-8">
+            <h4 class="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">Key Features</h4>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="sparkles" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Particle Animation</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Interactive canvas effects</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="layers" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Tiered Pricing</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">6 Minecraft-themed plans</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="message-square" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Discord Integration</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Community support</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 sm:gap-3">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <i data-lucide="moon" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+                </div>
+                <div>
+                  <div class="text-xs sm:text-sm font-medium text-white">Dark Theme</div>
+                  <div class="text-[10px] sm:text-xs text-neutral-500">Modern gaming aesthetic</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="relative py-16 sm:py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/[0.02] to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="text-blue-500 text-xs sm:text-sm font-medium uppercase tracking-widest">What I Offer</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 sm:mt-4 tracking-tight">
+          My
+          <span class="gradient-text"> Services</span>
+        </h2>
+        <p class="text-neutral-400 mt-3 sm:mt-4 max-w-xl sm:max-w-2xl mx-auto text-sm sm:text-base">
+          From concept to deployment, I provide end-to-end web development services tailored to your needs.
+        </p>
+      </div>
+      
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-blue-500/20 transition-colors">
+            <i data-lucide="globe" class="w-6 h-6 sm:w-7 sm:h-7 text-blue-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Business Websites</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            Professional websites for businesses of all sizes. Clean design, fast loading, and optimized for conversions.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-400"></i>
+              Responsive Design
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-400"></i>
+              SEO Optimized
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-purple-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-purple-500/20 transition-colors">
+            <i data-lucide="shopping-cart" class="w-6 h-6 sm:w-7 sm:h-7 text-purple-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">E-commerce Solutions</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            Full-featured online stores with secure checkout, inventory management, and payment integration.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-purple-400"></i>
+              Product Catalog
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-purple-400"></i>
+              Secure Payments
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-cyan-500/20 transition-colors">
+            <i data-lucide="palette" class="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">UI/UX Design</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            User-centered design solutions that enhance user experience and drive engagement.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+              Wireframing
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400"></i>
+              Prototyping
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-green-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-green-500/20 transition-colors">
+            <i data-lucide="layout" class="w-6 h-6 sm:w-7 sm:h-7 text-green-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Landing Pages</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            High-converting landing pages designed to capture leads and drive action.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+              A/B Testing Ready
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-green-400"></i>
+              Fast Loading
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-yellow-500/20 transition-colors">
+            <i data-lucide="code-2" class="w-6 h-6 sm:w-7 sm:h-7 text-yellow-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Web Applications</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            Interactive web applications with dynamic functionality and seamless user experiences.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400"></i>
+              Dynamic Features
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400"></i>
+              API Integration
+            </li>
+          </ul>
+        </div>
+        
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 group">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-red-500/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-red-500/20 transition-colors">
+            <i data-lucide="wrench" class="w-6 h-6 sm:w-7 sm:h-7 text-red-400"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Website Maintenance</h3>
+          <p class="text-neutral-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+            Ongoing support and maintenance to keep your website running smoothly.
+          </p>
+          <ul class="space-y-1.5 sm:space-y-2">
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-red-400"></i>
+              Security Updates
+            </li>
+            <li class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+              <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-red-400"></i>
+              Performance Optimization
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="relative py-16 sm:py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/[0.02] to-transparent"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
+        <div class="reveal">
+          <span class="text-blue-500 text-xs sm:text-sm font-medium uppercase tracking-widest">Get In Touch</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 sm:mt-4 mb-4 sm:mb-6 tracking-tight">
+            Let's Build Something
+            <span class="gradient-text"> Amazing</span>
+          </h2>
+          <p class="text-neutral-400 leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">
+            Have a project in mind? I'd love to hear about it. Send me a message and let's 
+            discuss how we can work together to bring your vision to life.
+          </p>
+          
+          <div class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="mail" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs sm:text-sm text-neutral-500">Email</div>
+                <div class="text-xs sm:text-base text-white truncate"> <a href="mailto:27nihanth02009@gmail.com">27nihanth02009@gmail.com</a></div>
+                
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="phone" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i>
+              </div>
+              <div>
+                <div class="text-xs sm:text-sm text-neutral-500">Phone</div>
+                <div class="text-xs sm:text-base text-white"><a href="tel:+919030103151">+91 9030103151</a></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="map-pin" class="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-xs sm:text-sm text-neutral-500">Location</div>
+                <div class="text-xs sm:text-base text-white">India</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-3 sm:gap-4">
+            <a href="https://www.instagram.com/__nihanth_07__/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-pink-500/50 transition-all">
+              <i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </a>
+            <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-blue-500/50 transition-all">
+              <i data-lucide="github" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </a>
+            <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-blue-500/50 transition-all">
+              <i data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </a>
+            <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-blue-500/50 transition-all">
+              <i data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="reveal">
+          <form class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-8">
+            <div class="grid gap-4 sm:gap-6">
+              <div class="grid grid-cols-2 gap-3 sm:gap-6">
+                <div>
+                  <label class="block text-xs sm:text-sm text-neutral-400 mb-1.5 sm:mb-2">First Name</label>
+                  <input type="text" placeholder="John" class="form-input w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white text-sm placeholder-neutral-500 focus:outline-none transition-all">
+                </div>
+                <div>
+                  <label class="block text-xs sm:text-sm text-neutral-400 mb-1.5 sm:mb-2">Last Name</label>
+                  <input type="text" placeholder="Doe" class="form-input w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white text-sm placeholder-neutral-500 focus:outline-none transition-all">
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-xs sm:text-sm text-neutral-400 mb-1.5 sm:mb-2">Email Address</label>
+                <input type="email" placeholder="john@gmail.com" class="form-input w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white text-sm placeholder-neutral-500 focus:outline-none transition-all">
+              </div>
+              
+              <div>
+                <label class="block text-xs sm:text-sm text-neutral-400 mb-1.5 sm:mb-2">Subject</label>
+                <select class="form-input w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white text-sm focus:outline-none transition-all">
+                  <option value="" class="bg-secondary">Select a subject</option>
+                  <option value="project" class="bg-secondary">Project Inquiry</option>
+                  <option value="collaboration" class="bg-secondary">Collaboration</option>
+                  <option value="freelance" class="bg-secondary">Freelance Work</option>
+                  <option value="other" class="bg-secondary">Other</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-xs sm:text-sm text-neutral-400 mb-1.5 sm:mb-2">Message</label>
+                <textarea rows="4" placeholder="Tell me about your project..." class="form-input w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl text-white text-sm placeholder-neutral-500 focus:outline-none transition-all resize-none"></textarea>
+              </div>
+              
+              <button type="submit" class="glow-button w-full py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium text-white flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative py-8 sm:py-12 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 items-center text-center sm:text-left">
+        <div>
+          <a href="#" class="text-xl sm:text-2xl font-bold gradient-text">nihanth.dev</a>
+          <p class="text-neutral-500 text-xs sm:text-sm mt-1 sm:mt-2">© 2025 All rights reserved.</p>
+        </div>
+        
+        <div class="flex items-center justify-center gap-4 sm:gap-6 order-3 sm:order-2">
+          <a href="#about" class="text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors">About</a>
+          <a href="#projects" class="text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors">Projects</a>
+          <a href="#services" class="text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors">Services</a>
+          <a href="#contact" class="text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors">Contact</a>
+        </div>
+        
+        <div class="flex items-center justify-center sm:justify-end gap-3 sm:gap-4 order-2 sm:order-3">
+          <a href="https://www.instagram.com/__nihanth_07__/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
+            <i data-lucide="instagram" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </a>
+          <a href="#" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
+            <i data-lucide="github" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </a>
+          <a href="#" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
+            <i data-lucide="linkedin" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </a>
+          <a href="#" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
+            <i data-lucide="twitter" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/5 text-center">
+        <p class="text-neutral-600 text-xs sm:text-sm">
+          Designed & Built with <span class="text-red-400">♥</span> by Nihanth Pendem
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+    
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    
+    const navbar = document.querySelector('nav');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-primary/95');
+      } else {
+        navbar.classList.remove('bg-primary/95');
+      }
+    });
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    const contactForm = document.querySelector('form');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const button = contactForm.querySelector('button[type="submit"]');
+      const originalText = button.innerHTML;
+      
+      button.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Message Sent!';
+      button.classList.add('bg-green-500');
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.classList.remove('bg-green-500');
+        lucide.createIcons();
+        contactForm.reset();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
